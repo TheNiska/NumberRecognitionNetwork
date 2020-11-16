@@ -131,10 +131,37 @@ print('b2=', b2)
 
 print('w1=', w1)
 print('b1=', b1)    
-    
-    
-    
 
+
+print('Now let me guess!')
+fl = True
+while fl:
+    print('Enter name of a image:', end='')
+    strr = input()
+    strr ='images/' + strr
+    img = Image.open(strr)
+    
+    try:
+        data = np.asarray( img, dtype='uint8' )
+    except SystemError:
+        data = np.asarray( img.getdata(), dtype='uint8' )
+    img.close()    
+    
+    img_now = image_to_vector(data)
+    x = img_now
+    x = x * 0.0001
+    
+    z1 = np.dot(w1, x) + b1
+    a1 = np.tanh(z1)
+
+    z2 = np.dot(w2, a1) + b2 
+    a2 = np.tanh(z2)
+    
+    z3 = np.dot(w3, a2) + b3
+    a3 = 1 / (1 + e**(-z3))
+    
+    print(a3)
+    
 
 
 

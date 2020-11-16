@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw
 import numpy as np
 from math import *
 import matplotlib.pyplot as plt
-m = 25 # i have 12 taining images 300x300 32 bit
+m = 25 # i have 25 taining images 300x300 32 bit
 cost_func = []
 x_iter = []
 
@@ -13,7 +13,7 @@ for i in range(m):
     def image_to_vector(image: np.ndarray) -> np.ndarray:
         """
         Args:
-        image: numpy array of shape (length, height, depth)        # this part of code I found in the internet
+        image: numpy array of shape (length, height, depth)
 
         Returns:
          v: a vector of shape (length x height x depth, 1)
@@ -49,7 +49,7 @@ w2 = np.random.randn(20,1) * 0.01
 w2 = w2.T
 
 b2 = 0.5
-x = x * 0.00001
+x = x * 0.0001
 
 for o in range(3000):
     proc = (o / 3000) * 100
@@ -73,11 +73,11 @@ for o in range(3000):
     db1 = (1/m) * np.sum(dz1, axis=1, keepdims=True)
 
     
-    w2 = w2 - 0.1 * dw2 
-    b2 = b2 - 0.1 * db2
+    w2 = w2 - 0.07 * dw2 
+    b2 = b2 - 0.07 * db2
 
-    w1 = w1 - 0.1 * dw1
-    b1 = b1 - 0.1 * db1
+    w1 = w1 - 0.07 * dw1
+    b1 = b1 - 0.07 * db1
     print('Cost===========================================', J)
     
     Jtemp = '{:.4f}'.format(J)  
@@ -106,6 +106,15 @@ fig = plt.subplots()
 plt.plot(x_iter, cost_func)
 plt.show()
 
+
+file = open('vision_weights.txt', 'w')
+file.write(str(w1))
+file.write('\n' + '------------' + '\n' + str(b1))
+file.write('\n' + '------------' + '\n' + str(w2))
+file.write('\n' + '------------' + '\n' + str(b2))
+file.close()
+
+
 print('Now let me guess!')
 fl = True
 while fl:
@@ -122,7 +131,7 @@ while fl:
     
     img_now = image_to_vector(data)
     x = img_now
-    x = x * 0.00001
+    x = x * 0.0001
     
     z1 = np.dot(w1, x) + b1
     a1 = np.tanh(z1)
