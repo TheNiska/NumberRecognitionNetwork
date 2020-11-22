@@ -11,11 +11,11 @@ def file_data_clear(filename: str):
         string_array += line
         line = file.readline()
     file.close()
-    file = open('weights.txt', 'w')
+    file = open(filename, 'w')
     file.write(string_array)
     file.close()
 
-
+'''
 file = open('weights.txt', 'w')
 a = np.random.randn(10, 5)
 
@@ -27,6 +27,6 @@ file_data_clear('weights.txt')
 a = np.loadtxt("weights.txt")
 print(a)
 print(a.shape)
-
+'''
 
 
